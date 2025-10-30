@@ -1,6 +1,6 @@
 import os
 from typing import Tuple
-from airflow.airflow_pipeline_adapters import AirflowStageMixin
+from airflow_pipelines.airflow_pipeline_adapters import AirflowStageMixin
 from pipelines.DataPipeline import BaseStage, StageResult, PipelineContext
 from commons.ftp.FtpWrapper import FtpWrapper, FtpWrapperParameters
 
@@ -16,8 +16,8 @@ class KibotDailyFtpDump(BaseStage, AirflowStageMixin):
     def run(self, ctx: PipelineContext) -> Tuple[StageResult, str]:
         errors : str = None
         try:
-            outfolder  = ctx.params.config_parser.get(self.kibot_ftp_section, 'outfolder')
-            ftp_params = FtpWrapperParameters(config_parser=ctx.params.get_config_parser(),
+            outfolder  = ctx.params.get(self.kibot_ftp_section, 'outfolder')
+            ftp_params = FtpWrapperParameters(config_parser=ctx.params,
                                               ftp_section=self.kibot_ftp_section)
             ftp_worker = FtpWrapper(ftp_params,
                                     ctx.logger)

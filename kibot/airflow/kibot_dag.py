@@ -1,13 +1,13 @@
-# ~/airflow/dags/kibot_daily_pipeline.py
+# ~/airflow_pipelines/dags/kibot_daily_pipeline.py
 from datetime import datetime, timedelta
 from airflow import DAG
 
-from airflow.airflow_pipeline_adapters import AirflowPipelineContext
+from airflow_pipelines.airflow_pipeline_adapters import AirflowPipelineContext
 from kibot.pipelines.KibotHistDataPipeline import KibotDailyFtpDump
 
-''''
-    ln -s /path/to/here/dags.py ~/airflow/dags/
-''''
+'''
+    ln -s /path/to/here/dags.py ~/airflow_pipelines/dags/
+'''
 
 # DAG configuration
 default_args = {
@@ -16,7 +16,7 @@ default_args = {
     "retries": 2,
     "retry_delay": timedelta(minutes=25),
     # your static config path
-    "config_path": "/home/pulse/configs/kibot_config.ini",
+    "config_path": "kibot_dag_config.ini",
 }
 
 with DAG(
