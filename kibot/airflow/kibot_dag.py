@@ -16,7 +16,7 @@ default_args = {
     "retries": 2,
     "retry_delay": timedelta(minutes=25),
     # your static config path
-    "config_path": "kibot_dag_config.ini",
+    "config_path": "private_kibot_dag_config.ini",
 }
 
 with DAG(
