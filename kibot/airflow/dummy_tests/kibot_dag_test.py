@@ -1,6 +1,6 @@
 from commons.utils.LoggingUtils import instantiate_logging
 from airflow_pipelines.airflow_pipeline_adapters import AirflowPipelineContext
-from kibot.pipelines.KibotHistDataPipeline import KibotDailyFtpDump
+from kibot.pipelines.KibotHistDataPipeline import KibotDailyFtpDump, KibotCdfProcessor
 
 # --- Mock airflow_kwargs as if passed by Airflow ---
 airflow_kwargs = {
@@ -12,7 +12,14 @@ airflow_kwargs = {
 # --- Create the context ---
 ctx = AirflowPipelineContext.from_airflow_context(airflow_kwargs)
 # Create the stage
-stage = KibotDailyFtpDump(name="KibotDailyFtpDump")
-# Run the stage
-result, msg = stage.run(ctx)
+stageFtp = KibotDailyFtpDump(name="KibotDailyFtpDump")
+# Run the ftp stage
+result, msg = stageFtp.run(ctx)
+print('Ftp:')
 print(result, msg)
+# Run the cdf process
+stageCdf = KibotCdfProcessor(name="KibotCdfProcessor")
+result, msg = stageCdf.run(ctx)
+print('Cdf:')
+print(result, msg)
+
